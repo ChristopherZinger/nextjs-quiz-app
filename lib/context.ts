@@ -1,6 +1,6 @@
 // /graphql/context.ts
 import { PrismaClient } from '@prisma/client'
-import { prisma } from './prisma'
+import { prisma } from '../pages/api/prisma'
 
 export type Context = {
   prisma: PrismaClient
