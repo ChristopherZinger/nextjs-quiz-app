@@ -5,20 +5,11 @@ import { buildSchemaSync, Query, Resolver } from 'type-graphql';
 import { createContext } from '../../lib/context'
 import Cors from 'micro-cors'
 import path from 'path';
-import { prisma } from './prisma'
 
-@Resolver()
-class QuestionResolver {
-  @Query(returns => [Question])
-  async questions () {
-    const questions = await prisma.question.findMany();
-    return questions;
-  }
-}
 
 const schemaPath = path.resolve(__dirname, './../../generated/schema/schema.gql')
 export const schema = buildSchemaSync({
-  resolvers: [QuestionResolver],
+  resolvers,
   validate: false,
   emitSchemaFile: schemaPath 
 })

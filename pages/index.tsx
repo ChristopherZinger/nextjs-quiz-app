@@ -9,10 +9,6 @@ import styles from '../styles/Home.module.css'
 const Home: NextPage = () => {
   const { data, loading, error } = useGetQuestionsQuery()
 
-  if (loading) {
-    return <div>loading</div>
-  }
-
   return (
     <div className={styles.container}>
       <Head>
@@ -20,6 +16,9 @@ const Home: NextPage = () => {
         <meta name="description" content="Architecture Quiz" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ul>
+        {data?.questions && data.questions.map(q => (<li>{q.wrongAnswer[0].answer}</li>))}
+      </ul>
 
       <main className={styles.main}>
         <h1>Architecture Quiz</h1>

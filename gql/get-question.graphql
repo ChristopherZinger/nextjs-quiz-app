@@ -2,5 +2,10 @@ query GetQuestions {
   questions{
     id
     question
+    correctAnswer
+    wrongAnswer {
+      id
+      answer
+    }
   }
 }
