@@ -33,3 +33,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# graphql generated
+generated
+gql/generated
+modules.d.ts
+graphql.schema.json

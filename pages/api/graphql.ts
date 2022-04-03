@@ -1,14 +1,29 @@
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-micro'
-import { resolvers } from "@generated/type-graphql";
-import { buildSchemaSync } from 'type-graphql';
+import { resolvers , Question} from "@generated/type-graphql" 
+import { buildSchemaSync, Query, Resolver } from 'type-graphql';
 import { createContext } from '../../lib/context'
 import Cors from 'micro-cors'
+import path from 'path';
+import { prisma } from './prisma'
 
-const schema = buildSchemaSync({
-  resolvers,
-  validate: false
+@Resolver()
+class QuestionResolver {
+  @Query(returns => [Question])
+  async questions () {
+    const questions = await prisma.question.findMany();
+    return questions;
+  }
+}
+
+const schemaPath = path.resolve(__dirname, './../../generated/schema/schema.gql')
+export const schema = buildSchemaSync({
+  resolvers: [QuestionResolver],
+  validate: false,
+  emitSchemaFile: schemaPath 
 })
+console.log('schema was generated at: ', schemaPath)
+
 const apolloServer = new ApolloServer({schema, context: createContext})
 const startServer = apolloServer.start()
 const cors = Cors()
